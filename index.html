@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#241833">
+  <title>FictionArmy — L'Armée des Étagères</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='14' width='64' height='64' fill='%23241833'/%3E%3Cpath d='M32 12l5 14h14l-11 8 4 14-12-8-12 8 4-14-11-8h14z' fill='%23ffc857'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <section id="screen-title" class="screen">
+    <div class="title-layout">
+      <div class="title-copy">
+        <p class="eyebrow">Collection de nuit</p>
+        <h1>FictionArmy</h1>
+        <p class="subtitle">L'Armée des Étagères</p>
+        <p class="lede">Les lumières s'éteignent. Tes figurines ouvrent les yeux. Poussière, cartons et rivales veulent vider la vitrine : à toi de tenir les rayons, Commandant.</p>
+        <div class="menu">
+          <button type="button" class="btn btn-primary" data-go="levels">Défendre la chambre</button>
+          <button type="button" class="btn btn-ghost" data-go="studio">Studio de tournage</button>
+          <button type="button" class="btn btn-ghost" data-go="codex">Codex de la collection</button>
+          <button type="button" class="btn btn-ghost" data-help="1">Comment jouer</button>
+        </div>
+        <p id="secret-badge" class="secret-badge" hidden>Pièce cachée trouvée</p>
+        <p class="footer-note">Inspiré de la chaîne <a href="https://www.tiktok.com/@fictionarmy" target="_blank" rel="noopener noreferrer">@fictionarmy</a></p>
+      </div>
+      <div class="hero" aria-hidden="true">
+        <div class="hero-sky">
+          <button type="button" id="moon" class="moon" aria-label="Lune de la chambre"></button>
+        </div>
+        <div class="hero-floor">
+          <div id="hero-shelf" class="hero-shelf"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screen-levels" class="screen">
+    <header class="page-head">
+      <button type="button" class="btn btn-ghost" data-go="title">← Retour</button>
+      <div>
+        <p class="eyebrow">Quatre nuits</p>
+        <h2>Choisis un rayon</h2>
+      </div>
+    </header>
+    <div id="level-grid" class="level-grid"></div>
+  </section>
+
+  <section id="screen-codex" class="screen">
+    <header class="page-head">
+      <button type="button" class="btn btn-ghost" data-go="title">← Retour</button>
+      <div>
+        <p class="eyebrow">Carnet du Commandant</p>
+        <h2>Codex de la collection</h2>
+      </div>
+    </header>
+    <div id="codex-grid" class="codex-grid"></div>
+    <p class="parent-row"><button type="button" class="btn btn-ghost" data-unlock="1">Mode parent : débloquer toutes les nuits</button></p>
+  </section>
+
+  <section id="screen-studio" class="screen">
+    <header class="page-head">
+      <button type="button" class="btn btn-ghost" data-go="title">← Retour</button>
+      <div>
+        <p class="eyebrow">Bonus</p>
+        <h2>Studio de tournage</h2>
+      </div>
+    </header>
+    <div class="studio-layout">
+      <div class="stage-column">
+        <div class="diorama" id="diorama" data-set="etagere">
+          <p id="set-label" class="set-label">Étagère</p>
+          <div id="diorama-figures"></div>
+          <div id="diorama-fx"></div>
+          <p id="countdown" class="countdown" hidden>3</p>
+        </div>
+        <p class="hint">Glisse les figurines. Flèches du clavier pour les caler. Suppr pour retirer.</p>
+      </div>
+      <aside class="tools">
+        <div class="tool-block">
+          <h3>Décors</h3>
+          <div class="swatches">
+            <button type="button" class="swatch is-on" data-set="etagere">Étagère</button>
+            <button type="button" class="swatch" data-set="bureau">Bureau</button>
+            <button type="button" class="swatch" data-set="commode">Commode</button>
+            <button type="button" class="swatch" data-set="carton">Fort carton</button>
+          </div>
+        </div>
+        <div class="tool-block">
+          <h3>Figurines</h3>
+          <div class="tray">
+            <button type="button" data-add="knight">Chevalier</button>
+            <button type="button" data-add="warrior">Guerrier</button>
+            <button type="button" data-add="archer">Archer</button>
+            <button type="button" data-add="soldier">Soldat</button>
+            <button type="button" data-add="collector">Collector</button>
+            <button type="button" data-add="camera">Caméra</button>
+          </div>
+          <label class="btn btn-ghost file-btn">Importer une photo
+            <input id="photo-input" type="file" accept="image/*" hidden>
+          </label>
+        </div>
+        <div class="tool-block">
+          <h3>Pose</h3>
+          <div class="tray">
+            <button type="button" data-pose="idle">Garde</button>
+            <button type="button" data-pose="strike">Attaque</button>
+            <button type="button" data-pose="victory">Victoire</button>
+            <button type="button" data-pose="sneak">Approche</button>
+            <button type="button" data-studio="flip">Retourner</button>
+            <button type="button" data-studio="delete">Retirer</button>
+            <button type="button" data-studio="multiply">Fond clair</button>
+          </div>
+        </div>
+        <div class="tool-block">
+          <h3>Effets</h3>
+          <div class="tray">
+            <button type="button" data-fx="dust">Poussière</button>
+            <button type="button" data-fx="hearts">Cœurs</button>
+            <button type="button" data-fx="laser">Laser</button>
+            <button type="button" data-fx="flash">Flash</button>
+          </div>
+        </div>
+        <label class="caption-label" for="caption">Légende</label>
+        <input id="caption" type="text" maxlength="90" value="FictionArmy — L'Armée des Étagères. #figurine #histoire #série">
+        <div class="panel-actions">
+          <button type="button" class="btn btn-action" data-studio="shoot">Tourner la prise</button>
+          <button type="button" class="btn btn-ghost" data-studio="poster">Affiche PNG</button>
+        </div>
+        <p id="studio-status" class="status-line"></p>
+        <canvas id="record-canvas" width="960" height="540"></canvas>
+        <div id="studio-output" class="studio-output"></div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="screen-battle" class="screen">
+    <div id="battle-root"></div>
+  </section>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-card panel" role="dialog" aria-modal="true" aria-labelledby="modal-body">
+      <button type="button" class="icon-x" data-close="1" aria-label="Fermer">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/studio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
